@@ -21,7 +21,6 @@ ignore = []
 
 [tool.ruff.lint.isort]
 combine-as-imports = true
-force-grid-wrap = 0
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
