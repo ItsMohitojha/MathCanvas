@@ -17,8 +17,8 @@
 | **Status** | 🟡 In Progress |
 | **Start Date** | 2026-06-12 |
 | **Target Release** | 2026-10-02 |
-| **Current Phase** | Phase 2 — Stroke Capture System |
-| **Overall Progress** | 30% |
+| **Current Phase** | Phase 3 — Recognition Layer |
+| **Overall Progress** | 40% |
 | **Health** | 🟢 Green |
 
 ### Phase Progress
@@ -29,7 +29,7 @@
 | 1 | Canvas Engine | 🟢 Complete | 100% | None |
 | 2 | Stroke Capture System | 🟢 Complete | 100% | None |
 | 3 | Recognition Layer | 🔵 Not Started | 0% | Phase 2 |
-| 4 | Expression Parser | 🔵 Not Started | 0% | None |
+| 4 | Expression Parser | 🟢 Complete | 100% | None |
 | 5 | Math Engine | 🔵 Not Started | 0% | Phase 4 |
 | 6 | Graph Engine | 🔵 Not Started | 0% | Phase 4, 5 |
 | 7 | Persistence Layer | 🔵 Not Started | 0% | Phase 2, 3, 5, 6 |
@@ -127,6 +127,15 @@ When adding tasks, use this format:
 | DOC-07 | Generate Rules.md | 0 | Agent-Docs | 2026-06-12 | — | Initial generation |
 | DOC-08 | Generate UI_UX.md | 0 | Agent-Docs | 2026-06-12 | — | Initial generation |
 | DOC-09 | Generate Structure.md | 0 | Agent-Docs | 2026-06-12 | — | Initial generation |
+| P4-01 | Create Pydantic models for parse endpoint | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-02 | Implement LaTeX to SymPy converter | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-03 | Implement expression type classifier | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-04 | Implement `POST /api/v1/parse` route | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-05 | Implement error handling for malformed expressions | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-06 | Implement input sanitization | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-09 | Write unit tests for expression parser | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-10 | Write unit tests for type classifier | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P4-11 | Write integration tests for parse API | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 
 ---
 
@@ -344,6 +353,7 @@ When adding tasks, use this format:
 | 2026-06-12T14:00:00 | Agent-Docs | Generated all 9 project documents | PRD.md, TRD.md, AppFlow.md, Schema.md, ImplementationPlan.md, Tracker.md, Rules.md, UI_UX.md, Structure.md | P0 | Initial documentation generation |
 | 2026-06-18T10:15:00 | Agent-Frontend | Implemented Phase 1 Canvas Engine | canvas_state.dart, canvas_transform.dart, canvas_state_provider.dart, canvas_background_painter.dart, canvas_gesture_handler.dart, canvas_widget.dart, canvas_toolbar.dart, canvas_screen.dart | P1 | 8 files created/modified — domain models, providers, widgets, screen |
 | 2026-06-18T20:15:00 | Agent-Frontend | Implemented Phase 2 Stroke Capture System | stroke_point.dart, stroke.dart, stroke_entity.dart, stroke_local_datasource.dart, stroke_repository_impl.dart, stroke_painter.dart, canvas_state.dart, canvas_state_provider.dart, canvas_gesture_handler.dart, canvas_widget.dart, canvas_screen.dart | P2 | 11 files created/modified — pressure-sensitive drawing, palm rejection, Catmull-Rom smoothing, SQLite database persistence, and culling |
+| 2026-06-18T22:50:00 | Agent-Backend | Implemented Phase 4 Expression Parser | parse.py, parser.py, test_parser.py, test_api_parse.py, requirements.txt | P4 | 5 files created/modified — Safe LaTeX-to-SymPy parser, type classifier, FastAPI route, comprehensive unit/API tests, and dependency configuration |
 
 ---
 
