@@ -12,12 +12,13 @@ import 'package:mathcanvas/features/canvas/presentation/providers/canvas_state_p
 import 'package:mathcanvas/features/canvas/presentation/widgets/canvas_background_painter.dart';
 import 'package:mathcanvas/features/canvas/presentation/widgets/canvas_gesture_handler.dart';
 import 'package:mathcanvas/features/canvas/presentation/widgets/stroke_painter.dart';
+import 'package:mathcanvas/features/recognition/presentation/providers/recognition_state_provider.dart';
+import 'package:mathcanvas/features/recognition/presentation/widgets/recognition_overlay_painter.dart';
 
 /// The main infinite canvas widget.
 ///
-/// Renders the background grid and applies viewport transformations
-/// based on the current [CanvasState]. Wrapped with gesture detection
-/// for pan and zoom interactions.
+/// Renders the background grid, hand-drawn strokes, and recognized
+/// mathematical expression overlays. Wrapped with gesture detection.
 class CanvasWidget extends ConsumerWidget {
   /// Creates the canvas widget.
   const CanvasWidget({super.key});
@@ -56,6 +57,27 @@ class CanvasWidget extends ConsumerWidget {
                   strokeColor: colors.strokeDefault,
                 ),
                 child: const SizedBox.expand(),
+              ),
+            ),
+          ),
+          // Recognition Layer: Draws bounding boxes and math labels
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Consumer(
+                builder: (context, ref, child) {
+                  final recState = ref.watch(recognitionStateProvider);
+                  return CustomPaint(
+                    painter: RecognitionOverlayPainter(
+                      expressions: recState.expressions,
+                      viewportOffset: canvasState.viewportOffset,
+                      zoomLevel: canvasState.zoomLevel,
+                      primaryColor: colors.primary,
+                      warningColor: colors.warning,
+                      labelTextColor: colors.onPrimary,
+                    ),
+                    child: const SizedBox.expand(),
+                  );
+                },
               ),
             ),
           ),
