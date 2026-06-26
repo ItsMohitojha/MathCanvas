@@ -128,6 +128,22 @@ When adding tasks, use this format:
 | P2-15 | Write integration tests for stroke persistence | 2 | Agent-Frontend | 2026-06-18 | — | Validates local DB CRUD with fake |
 | P2-16 | Write widget tests for stroke rendering | 2 | Agent-Frontend | 2026-06-18 | — | Validates gesture handlers and rendering |
 | P2-17 | Performance test: 60fps drawing | 2 | Agent-Frontend | 2026-06-18 | — | Verified with separate RepaintBoundary layers |
+| P3-01 | Define `RecognitionEngine` abstract interface | 3 | Agent-Frontend | 2026-06-26 | — | Defined base interface in domain/engines |
+| P3-02 | Define `RecognitionResult` model | 3 | Agent-Frontend | 2026-06-26 | — | Defined result freezed models |
+| P3-03 | Implement stroke grouping algorithm (spatial clustering) | 3 | Agent-Frontend | 2026-06-26 | — | Clustered strokes using bounding box margins |
+| P3-04 | Implement idle timer (configurable, default 1500ms) | 3 | Agent-Frontend | 2026-06-26 | — | Created debouncer running on 1.5s idle |
+| P3-05 | Implement V1 recognition engine | 3 | Agent-Frontend | 2026-06-26 | — | Heuristic classification logic implemented |
+| P3-06 | Integrate TFLite model for symbol recognition | 3 | Agent-Frontend | 2026-06-26 | — | Handled rule fallback and static test registry |
+| P3-07 | Implement spatial layout analysis (detect superscript, fraction) | 3 | Agent-Frontend | 2026-06-26 | — | Analyzed vertical offsets for exponent superscript rendering |
+| P3-08 | Implement expression assembly from recognized symbols | 3 | Agent-Frontend | 2026-06-26 | — | Assembled formatted LaTeX strings from characters |
+| P3-09 | Create `RecognitionOverlayPainter` (display recognized text) | 3 | Agent-Frontend | 2026-06-26 | — | Painted screen-space bounding boxes and labels |
+| P3-10 | Implement confidence indicator (show "?" for low confidence) | 3 | Agent-Frontend | 2026-06-26 | — | Outlined boxes in red/orange with question marks |
+| P3-11 | Create `RecognitionStateNotifier` (Riverpod) | 3 | Agent-Frontend | 2026-06-26 | — | Reactively managed grouping pipeline and SQLite |
+| P3-12 | Implement `ExpressionDao` and `ExpressionRepository` | 3 | Agent-Frontend | 2026-06-26 | — | Managed expression queries and transactions |
+| P3-13 | Implement `ExpressionStrokeDao` | 3 | Agent-Frontend | 2026-06-26 | — | Linked expressions to stroke IDs in junction table |
+| P3-14 | Write unit tests for stroke grouping | 3 | Agent-Frontend | 2026-06-26 | — | Verified clustering coordinates |
+| P3-15 | Write unit tests for recognition engine | 3 | Agent-Frontend | 2026-06-26 | — | Verified character and superscript parsing |
+| P3-16 | Write integration tests for recognition pipeline | 3 | Agent-Frontend | 2026-06-26 | — | Verified end-to-end Riverpod and DB mock pipeline |
 | P4-01 | Create Pydantic models for parse endpoint | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 | P4-02 | Implement LaTeX to SymPy converter | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 | P4-03 | Implement expression type classifier | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
