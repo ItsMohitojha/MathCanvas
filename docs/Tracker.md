@@ -71,36 +71,7 @@
 
 | Task ID | Task | Phase | Assignee | Priority | Status | Start | End | Blockers | Notes |
 |---------|------|-------|----------|----------|--------|-------|-----|----------|-------|
-| P1-01 | Create CanvasState freezed model | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | `canvas_state.dart` created |
-| P1-02 | Create CanvasStateNotifier (Riverpod) | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | `canvas_state_provider.dart` created |
-| P1-03 | Implement coordinate transformation matrix | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | `canvas_transform.dart` created |
-| P1-04 | Create CanvasBackgroundPainter (grid dots) | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Dot grid with fade at low zoom |
-| P1-05 | Create CanvasWidget with CustomPainter | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Composition of bg + gestures |
-| P1-06 | Implement pan gesture (two-finger) | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | In `canvas_gesture_handler.dart` |
-| P1-07 | Implement zoom gesture (pinch) | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Focal point algorithm |
-| P1-08 | Implement zoom focal point calculation | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Part of zoom in notifier |
-| P1-09 | Add zoom level clamping (0.1–10.0) | 1 | Agent-Frontend | Medium | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Uses AppConstants |
-| P1-10 | Create CanvasScreen scaffold with toolbar | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Toolbar + ghost hint |
-| P1-11 | Write unit tests for coordinate transformation | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | P1-03 | Unit tests written and passed |
-| P1-12 | Write widget tests for pan/zoom gestures | 1 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | P1-06, P1-07 | Widget tests written and passed |
-| P1-13 | Performance test: verify 60fps during pan/zoom | 1 | Agent-Frontend | Medium | 🟢 Complete | 2026-06-18 | 2026-06-18 | P1-05 | Verified via CustomPainter viewport culling |
-| P2-01 | Create Stroke and StrokePoint freezed models | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Models generated with explicitToJson |
-| P2-02 | Create StrokeEntity database model | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Handles database mapping and JSON formatting |
-| P2-03 | Implement StrokePainter (CustomPainter) | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Renders smooth lines using Catmull-Rom |
-| P2-04 | Implement pressure-sensitive stroke width | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Width = baseWidth * (0.5 + pressure * 0.5) |
-| P2-05 | Implement stroke capture in Listener | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Listens to raw pointer events |
-| P2-06 | Differentiate 1-finger draw from 2-finger pan | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | 1 pointer = draw, 2 pointers = pan/zoom |
-| P2-07 | Implement palm rejection | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Rejects touches within 2s of stylus events |
-| P2-08 | Implement SQLite database initialization | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Done in database schema v1 migration |
-| P2-09 | Implement StrokeDao and StrokeRepository | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Local SQLite queries and transactions |
-| P2-10 | Implement stroke persistence (save on pointer-up) | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Discards invalid strokes (points < 2) |
-| P2-11 | Implement stroke loading on notebook open | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Screen calls loadNotebook ininitState |
-| P2-12 | Implement bounding box calculation | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Getter on Stroke domain model |
-| P2-13 | Implement viewport culling | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Only renders visible strokes + 100px margin |
-| P2-14 | Write unit tests for stroke models | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Validates bbox and json serialization |
-| P2-15 | Write integration tests for stroke persistence | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Validates local DB CRUD with fake |
-| P2-16 | Write widget tests for stroke rendering | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Validates gesture handlers and rendering |
-| P2-17 | Performance test: 60fps drawing | 2 | Agent-Frontend | High | 🟢 Complete | 2026-06-18 | 2026-06-18 | — | Verified with separate RepaintBoundary layers |
+| — | No active tasks at this time | — | — | — | — | — | — | — | — |
 
 ### Task Template
 
@@ -127,6 +98,36 @@ When adding tasks, use this format:
 | DOC-07 | Generate Rules.md | 0 | Agent-Docs | 2026-06-12 | — | Initial generation |
 | DOC-08 | Generate UI_UX.md | 0 | Agent-Docs | 2026-06-12 | — | Initial generation |
 | DOC-09 | Generate Structure.md | 0 | Agent-Docs | 2026-06-12 | — | Initial generation |
+| P1-01 | Create CanvasState freezed model | 1 | Agent-Frontend | 2026-06-18 | — | `canvas_state.dart` created |
+| P1-02 | Create CanvasStateNotifier (Riverpod) | 1 | Agent-Frontend | 2026-06-18 | — | `canvas_state_provider.dart` created |
+| P1-03 | Implement coordinate transformation matrix | 1 | Agent-Frontend | 2026-06-18 | — | `canvas_transform.dart` created |
+| P1-04 | Create CanvasBackgroundPainter (grid dots) | 1 | Agent-Frontend | 2026-06-18 | — | Dot grid with fade at low zoom |
+| P1-05 | Create CanvasWidget with CustomPainter | 1 | Agent-Frontend | 2026-06-18 | — | Composition of bg + gestures |
+| P1-06 | Implement pan gesture (two-finger) | 1 | Agent-Frontend | 2026-06-18 | — | In `canvas_gesture_handler.dart` |
+| P1-07 | Implement zoom gesture (pinch) | 1 | Agent-Frontend | 2026-06-18 | — | Focal point algorithm |
+| P1-08 | Implement zoom focal point calculation | 1 | Agent-Frontend | 2026-06-18 | — | Part of zoom in notifier |
+| P1-09 | Add zoom level clamping (0.1–10.0) | 1 | Agent-Frontend | 2026-06-18 | — | Uses AppConstants |
+| P1-10 | Create CanvasScreen scaffold with toolbar | 1 | Agent-Frontend | 2026-06-18 | — | Toolbar + ghost hint |
+| P1-11 | Write unit tests for coordinate transformation | 1 | Agent-Frontend | 2026-06-18 | — | Unit tests written and passed |
+| P1-12 | Write widget tests for pan/zoom gestures | 1 | Agent-Frontend | 2026-06-18 | — | Widget tests written and passed |
+| P1-13 | Performance test: verify 60fps during pan/zoom | 1 | Agent-Frontend | 2026-06-18 | — | Verified via CustomPainter viewport culling |
+| P2-01 | Create Stroke and StrokePoint freezed models | 2 | Agent-Frontend | 2026-06-18 | — | Models generated with explicitToJson |
+| P2-02 | Create StrokeEntity database model | 2 | Agent-Frontend | 2026-06-18 | — | Handles database mapping and JSON formatting |
+| P2-03 | Implement StrokePainter (CustomPainter) | 2 | Agent-Frontend | 2026-06-18 | — | Renders smooth lines using Catmull-Rom |
+| P2-04 | Implement pressure-sensitive stroke width | 2 | Agent-Frontend | 2026-06-18 | — | Width = baseWidth * (0.5 + pressure * 0.5) |
+| P2-05 | Implement stroke capture in Listener | 2 | Agent-Frontend | 2026-06-18 | — | Listens to raw pointer events |
+| P2-06 | Differentiate 1-finger draw from 2-finger pan | 2 | Agent-Frontend | 2026-06-18 | — | 1 pointer = draw, 2 pointers = pan/zoom |
+| P2-07 | Implement palm rejection | 2 | Agent-Frontend | 2026-06-18 | — | Rejects touches within 2s of stylus events |
+| P2-08 | Implement SQLite database initialization | 2 | Agent-Frontend | 2026-06-18 | — | Done in database schema v1 migration |
+| P2-09 | Implement StrokeDao and StrokeRepository | 2 | Agent-Frontend | 2026-06-18 | — | Local SQLite queries and transactions |
+| P2-10 | Implement stroke persistence (save on pointer-up) | 2 | Agent-Frontend | 2026-06-18 | — | Discards invalid strokes (points < 2) |
+| P2-11 | Implement stroke loading on notebook open | 2 | Agent-Frontend | 2026-06-18 | — | Screen calls loadNotebook ininitState |
+| P2-12 | Implement bounding box calculation | 2 | Agent-Frontend | 2026-06-18 | — | Getter on Stroke domain model |
+| P2-13 | Implement viewport culling | 2 | Agent-Frontend | 2026-06-18 | — | Only renders visible strokes + 100px margin |
+| P2-14 | Write unit tests for stroke models | 2 | Agent-Frontend | 2026-06-18 | — | Validates bbox and json serialization |
+| P2-15 | Write integration tests for stroke persistence | 2 | Agent-Frontend | 2026-06-18 | — | Validates local DB CRUD with fake |
+| P2-16 | Write widget tests for stroke rendering | 2 | Agent-Frontend | 2026-06-18 | — | Validates gesture handlers and rendering |
+| P2-17 | Performance test: 60fps drawing | 2 | Agent-Frontend | 2026-06-18 | — | Verified with separate RepaintBoundary layers |
 | P4-01 | Create Pydantic models for parse endpoint | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 | P4-02 | Implement LaTeX to SymPy converter | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 | P4-03 | Implement expression type classifier | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
