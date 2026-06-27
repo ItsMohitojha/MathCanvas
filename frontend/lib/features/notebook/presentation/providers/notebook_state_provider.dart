@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mathcanvas/shared/database/database_provider.dart';
 import '../../domain/models/notebook.dart';
@@ -58,7 +59,7 @@ class NotebookStateNotifier extends Notifier<NotebookState> {
       return;
     }
 
-    final existing = state.notebooks.firstWhere((n) => n.id == id, orElse: () => null as dynamic);
+    final existing = state.notebooks.firstWhereOrNull((n) => n.id == id);
     if (existing != null) {
       state = state.copyWith(activeNotebook: existing);
       return;

@@ -62,3 +62,34 @@ def test_api_simplify_error():
     data = response.json()
     assert data["success"] is False
     assert data["error"]["code"] == "SOLVE_ERROR"
+
+def test_api_solve_generic_exception(mocker):
+    mocker.patch("api.routes.solve.solver.run_with_timeout", side_effect=Exception("Solve route unexpected exception"))
+    response = client.post("/api/v1/solve", json={
+        "expression": "x = 2",
+        "variables": ["x"]
+    })
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is False
+    assert data["error"]["code"] == "INTERNAL_ERROR"
+    assert "Solve route unexpected exception" in data["error"]["message"]
+
+def test_api_evaluate_generic_exception(mocker):
+    mocker.patch("api.routes.solve.solver.run_with_timeout", side_effect=Exception("Evaluate route unexpected exception"))
+    response = client.post("/api/v1/evaluate", json={"expression": "2+3"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is False
+    assert data["error"]["code"] == "INTERNAL_ERROR"
+    assert "Evaluate route unexpected exception" in data["error"]["message"]
+
+def test_api_simplify_generic_exception(mocker):
+    mocker.patch("api.routes.solve.solver.run_with_timeout", side_effect=Exception("Simplify route unexpected exception"))
+    response = client.post("/api/v1/simplify", json={"expression": "x+y"})
+    assert response.status_code == 200
+    data = response.json()
+    assert data["success"] is False
+    assert data["error"]["code"] == "INTERNAL_ERROR"
+    assert "Simplify route unexpected exception" in data["error"]["message"]
+

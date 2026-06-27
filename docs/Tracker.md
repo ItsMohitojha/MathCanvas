@@ -17,8 +17,8 @@
 | **Status** | 🟡 In Progress |
 | **Start Date** | 2026-06-12 |
 | **Target Release** | 2026-10-02 |
-| **Current Phase** | Phase 8 — Testing |
-| **Overall Progress** | 80% |
+| **Current Phase** | Phase 9 — Release |
+| **Overall Progress** | 90% |
 | **Health** | 🟢 Green |
 
 ### Phase Progress
@@ -33,8 +33,8 @@
 | 5 | Math Engine | 🟢 Complete | 100% | None |
 | 6 | Graph Engine | 🟢 Complete | 100% | None |
 | 7 | Persistence Layer | 🟢 Complete | 100% | None |
-| 8 | Testing | 🔵 Not Started | 0% | All |
-| 9 | Release | 🔵 Not Started | 0% | Phase 8 |
+| 8 | Testing | 🟢 Complete | 100% | None |
+| 9 | Release | 🟡 In Progress | 0% | None |
 
 **Status Legend:**
 - 🔵 Not Started
@@ -426,6 +426,7 @@ When adding tasks, use this format:
 | 2026-06-26T21:00:00 | Agent-Frontend & Agent-Backend | Implemented Phase 5 Math Engine | solver.py, solve.py, test_solver.py, test_api_solve.py, math_result.dart, variable.dart, result_entity.dart, variable_entity.dart, math_local_datasource.dart, math_api_client.dart, math_repository.dart, math_repository_impl.dart, math_state.dart, math_state_provider.dart, math_result_overlay.dart, canvas_widget.dart | P5 | 16 files created/modified — backend solver/evaluation/simplification, caching, frontend DTOs/models, local datasource, Riverpod math state with cycle detection & dependent variable propagation, canvas result overlay widget. |
 | 2026-06-27T17:00:00 | Agent-Frontend & Agent-Backend | Implemented Phase 6 Graph Engine | grapher.py, test_grapher.py, test_api_graph.py, graph_data.dart, graph_entity.dart, graph_api_client.dart, graph_local_datasource.dart, graph_repository.dart, graph_repository_impl.dart, graph_state.dart, graph_state_provider.dart, graph_chart_painter.dart, graph_card_widget.dart, graph_overlay.dart, canvas_widget.dart | P6 | 15 files created/modified — native 2D chart CustomPainter, interactive graph cards with pan/zoom/tap-to-inspect, Riverpod state auto-generating graphs for function expressions, SQLite persistence, backend grapher bug fix (sp.isnan → math.isnan). 52 tests total (27 backend + 25 frontend). |
 | 2026-06-27T17:30:00 | Agent-Frontend | Implemented Phase 7 Persistence Layer | pubspec.yaml, main.dart, app.dart, notebook.dart, notebook_repository.dart, notebook_entity.dart, notebook_local_datasource.dart, notebook_repository_impl.dart, notebook_state.dart, notebook_state_provider.dart, auto_save_provider.dart, theme_provider.dart, home_screen.dart, notebook_card.dart, settings_bottom_sheet.dart, save_indicator.dart, canvas_toolbar.dart, canvas_screen.dart, tests | P7 | 18 files created/modified + 4 test files — complete notebook CRUD flow, 30s auto-save timer + lifecycle observer save, viewport position and zoom persistence, save indicator, SharedPreferences theme settings persistence, responsive premium grid dashboard. 17 new frontend unit/widget tests. |
+| 2026-06-27T18:45:00 | Agent-QA | Completed Phase 8 Testing & Audits | requirements.txt, pubspec.yaml, tests | P8 | 99 backend tests passing (99% coverage), 98 frontend tests passing (81.4% coverage), E2E integration test, and comprehensive latency/frame/SymPy performance benchmarks. |
 
 ---
 
@@ -485,6 +486,12 @@ Each entry follows [Keep a Changelog](https://keepachangelog.com/) format:
   - Widgets: SaveIndicator (saving/saved animations), SettingsBottomSheet (theme toggle)
   - Dashboard: Glassmorphism HomeScreen showing responsive grid of notebook cards, long-press actions (rename, delete dialogs), search filtering, empty states
   - Screen integration: CanvasScreen restores viewport state and displays notebook title
+- Phase 8 Testing (8 tasks)
+  - Backend: Added pytest-cov, wrote missing unit tests to push engine coverage to 100%, wrote test_performance.py profiling SymPy evaluation/solving latency. Total backend coverage: 99%.
+  - Frontend: Wrote local database integration tests using sqflite_common_ffi, settings widget tests, math result overlay widget tests, graph overlay widget tests, and home screen widget tests. Total frontend logical coverage: 81.4%.
+  - Frontend: Wrote e2e_integration_test.dart simulating notebook canvas CRUD loop.
+  - Frontend: Wrote performance_benchmark_test.dart measuring SQLite latency, Catmull-Rom math, and canvas rendering.
+
 
 ### Fixed
 - `grapher.py`: Replaced `sp.isnan()` with `math.isnan()`/`math.isinf()` for proper float handling

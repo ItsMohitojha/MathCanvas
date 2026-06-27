@@ -12,6 +12,7 @@ final autoSaveProvider = NotifierProvider<AutoSaveNotifier, void>(AutoSaveNotifi
 class AutoSaveNotifier extends Notifier<void> with WidgetsBindingObserver {
   Timer? _timer;
   String? _currentNotebookId;
+  bool _isDisposed = false;
 
   @override
   void build() {
@@ -27,6 +28,7 @@ class AutoSaveNotifier extends Notifier<void> with WidgetsBindingObserver {
     }
 
     ref.onDispose(() {
+      _isDisposed = true;
       WidgetsBinding.instance.removeObserver(this);
       _timer?.cancel();
     });
@@ -46,6 +48,7 @@ class AutoSaveNotifier extends Notifier<void> with WidgetsBindingObserver {
   Future<void> triggerSave() async {
     final notebookId = _currentNotebookId;
     if (notebookId == null) return;
+    if (_isDisposed) return;
 
     final canvasState = ref.read(canvasStateProvider);
     final offset = canvasState.viewportOffset;
@@ -62,17 +65,20 @@ class AutoSaveNotifier extends Notifier<void> with WidgetsBindingObserver {
         zoom,
       );
       
+      if (_isDisposed) return;
       // Update status to saved
       ref.read(saveStatusProvider.notifier).state = SaveStatus.saved;
       
       // Revert to idle after 2 seconds
       Future.delayed(const Duration(seconds: 2), () {
+        if (_isDisposed) return;
         final currentStatus = ref.read(saveStatusProvider);
         if (currentStatus == SaveStatus.saved) {
           ref.read(saveStatusProvider.notifier).state = SaveStatus.idle;
         }
       });
     } catch (_) {
+      if (_isDisposed) return;
       ref.read(saveStatusProvider.notifier).state = SaveStatus.idle;
     }
   }

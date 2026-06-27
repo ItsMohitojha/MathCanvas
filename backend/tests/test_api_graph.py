@@ -128,3 +128,16 @@ class TestGraphErrorHandling:
             "output_format": "data",
         })
         assert response.status_code == 422
+
+    def test_api_graph_generic_exception(self, mocker):
+        mocker.patch("api.routes.graph.generate_graph_data", side_effect=Exception("Graph route unexpected exception"))
+        response = client.post("/api/v1/graph", json={
+            "expression": "x**2",
+            "output_format": "data",
+        })
+        assert response.status_code == 200
+        data = response.json()
+        assert data["success"] is False
+        assert data["error"]["code"] == "INTERNAL_ERROR"
+        assert "Graph route unexpected exception" in data["error"]["message"]
+

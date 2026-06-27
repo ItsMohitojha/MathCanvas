@@ -46,10 +46,15 @@ class _CanvasScreenState extends ConsumerState<CanvasScreen> {
   }
 
   @override
-  void dispose() {
+  void deactivate() {
     // Save current viewport state on exit
     ref.read(autoSaveProvider.notifier).triggerSave();
     ref.read(notebookStateProvider.notifier).selectNotebook(null);
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
     super.dispose();
   }
 

@@ -11,6 +11,24 @@ import 'package:mathcanvas/features/recognition/data/models/expression_entity.da
 import 'package:mathcanvas/features/recognition/data/datasources/expression_local_datasource.dart';
 import 'package:mathcanvas/features/recognition/presentation/providers/recognition_state_provider.dart';
 import 'package:mathcanvas/features/recognition/data/engines/tflite_recognition_engine.dart';
+import 'package:mathcanvas/features/notebook/domain/repositories/notebook_repository.dart';
+import 'package:mathcanvas/features/notebook/domain/models/notebook.dart';
+import 'package:mathcanvas/features/notebook/presentation/providers/notebook_state_provider.dart';
+
+class FakeNotebookRepository implements NotebookRepository {
+  @override
+  Future<List<Notebook>> getNotebooks() async => [];
+  @override
+  Future<Notebook?> getNotebookById(String id) async => null;
+  @override
+  Future<Notebook> createNotebook(String name) async => throw UnimplementedError();
+  @override
+  Future<void> renameNotebook(String id, String name) async {}
+  @override
+  Future<void> deleteNotebook(String id) async {}
+  @override
+  Future<void> updateViewport(String id, double x, double y, double zoom) async {}
+}
 
 // Fake expression datasource to run without real sqflite in tests
 class FakeExpressionLocalDatasource implements ExpressionLocalDatasource {
@@ -105,6 +123,7 @@ void main() {
         overrides: [
           expressionLocalDatasourceProvider.overrideWithValue(fakeExprDatasource),
           strokeRepositoryProvider.overrideWithValue(fakeStrokeRepo),
+          notebookRepositoryProvider.overrideWithValue(FakeNotebookRepository()),
         ],
       );
 

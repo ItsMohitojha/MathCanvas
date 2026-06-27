@@ -144,3 +144,22 @@ class TestPerformance:
         generate_graph_data("sin(x) * cos(x)", num_points=500)
         elapsed = time.perf_counter() - start
         assert elapsed < 3.0, f"Graph generation took {elapsed:.2f}s, expected < 3s"
+
+def test_evaluate_function_large_values():
+    # Points will be 2.0e10, which is > 1e10 -> returns None (line 53)
+    x_vals, y_vals = evaluate_function("x", "x", 2e10, 3e10, 3)
+    assert all(y is None for y in y_vals)
+
+def test_generate_graph_html_import_error(monkeypatch):
+    import sys
+    # Force ImportError on import plotly.graph_objects
+    monkeypatch.setitem(sys.modules, "plotly.graph_objects", None)
+    result = generate_graph_html("x**2")
+    assert "Plotly graph not available: Plotly module missing" in result
+
+def test_generate_graph_html_exception(mocker):
+    # Force exception inside plotly figure creation
+    mocker.patch("plotly.graph_objects.Figure", side_effect=Exception("Mock plotly error"))
+    with pytest.raises(SolveError, match="Cannot generate graph HTML"):
+        generate_graph_html("x**2")
+

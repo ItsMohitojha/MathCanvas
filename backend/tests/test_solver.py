@@ -66,3 +66,61 @@ def test_solver_timeout():
         
     with pytest.raises(TimeoutError):
         solver.run_with_timeout(slow_func)
+
+def test_evaluate_arithmetic_with_symbol_table():
+    solver = MathSolver()
+    res = solver.evaluate_arithmetic("a + 1", {"a": "2"})
+    assert res.value == "3"
+
+def test_solve_equation_with_symbol_table():
+    solver = MathSolver()
+    res = solver.solve_equation("x + a = 5", ["x"], {"a": "2"})
+    assert res.value == "x=3"
+
+def test_solve_equation_cache_hit():
+    solver = MathSolver()
+    res1 = solver.solve_equation("x = 2", ["x"])
+    res2 = solver.solve_equation("x = 2", ["x"])
+    assert res1 is res2
+
+def test_simplify_expression_cache_hit_and_symbol_table():
+    solver = MathSolver()
+    res1 = solver.simplify_expression("x + a", {"a": "y"})
+    res2 = solver.simplify_expression("x + a", {"a": "y"})
+    assert res1 is res2
+    assert res1.value == "x + y"
+
+def test_solve_equation_no_solutions():
+    solver = MathSolver()
+    # No solution Eq(1, 0)
+    with pytest.raises(SolveError):
+        solver.solve_equation("1 = 0", ["x"])
+
+def test_solve_equation_symbolic_solution():
+    solver = MathSolver()
+    # Solution is symbolic (-y), float conversion raises error which is ignored
+    res = solver.solve_equation("x + y = 0", ["x"])
+    assert res.value == "x=-y"
+    assert res.numeric is None
+
+def test_solve_equation_dict_and_fallback_mock(mocker):
+    solver = MathSolver()
+    # Mock solve to return dict and then a fallback non-list/non-dict
+    mocker.patch("engine.solver.solve", return_value={"x": 5})
+    res1 = solver.solve_equation("x = 5", ["x"])
+    assert res1.value == "x=5"
+
+    solver._cache.clear()
+    mocker.patch("engine.solver.solve", return_value="fallback_val")
+    res2 = solver.solve_equation("x = 5", ["x"])
+    assert res2.value == "x=fallback_val"
+
+def test_run_with_timeout_generic_error():
+    solver = MathSolver()
+    
+    def fail_func():
+        raise ValueError("Generic computation error")
+        
+    with pytest.raises(SolveError, match="Calculation error: Generic computation error"):
+        solver.run_with_timeout(fail_func)
+

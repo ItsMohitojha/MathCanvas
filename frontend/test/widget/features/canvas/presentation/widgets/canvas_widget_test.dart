@@ -8,6 +8,11 @@ import 'package:mathcanvas/features/canvas/presentation/providers/canvas_state_p
 import 'package:mathcanvas/features/canvas/presentation/screens/canvas_screen.dart';
 import 'package:mathcanvas/features/canvas/presentation/widgets/canvas_widget.dart';
 
+import 'package:mathcanvas/features/notebook/domain/models/notebook.dart';
+import 'package:mathcanvas/features/notebook/domain/repositories/notebook_repository.dart';
+import 'package:mathcanvas/features/notebook/presentation/providers/notebook_state_provider.dart';
+import 'package:collection/collection.dart';
+
 class FakeStrokeRepository implements StrokeRepository {
   final List<Stroke> strokes = [];
 
@@ -45,6 +50,69 @@ class FakeStrokeRepository implements StrokeRepository {
   }
 }
 
+class FakeNotebookRepository implements NotebookRepository {
+  final List<Notebook> notebooks = [
+    Notebook(
+      id: 'test_notebook',
+      name: 'Notebook',
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      viewportX: 0.0,
+      viewportY: 0.0,
+      zoomLevel: 1.0,
+    ),
+  ];
+
+  @override
+  Future<List<Notebook>> getNotebooks() async => notebooks;
+
+  @override
+  Future<Notebook?> getNotebookById(String id) async {
+    return notebooks.firstWhereOrNull((n) => n.id == id);
+  }
+
+  @override
+  Future<Notebook> createNotebook(String name) async {
+    final nb = Notebook(
+      id: name,
+      name: name,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      viewportX: 0.0,
+      viewportY: 0.0,
+      zoomLevel: 1.0,
+    );
+    notebooks.add(nb);
+    return nb;
+  }
+
+  @override
+  Future<void> renameNotebook(String id, String name) async {
+    final idx = notebooks.indexWhere((n) => n.id == id);
+    if (idx != -1) {
+      notebooks[idx] = notebooks[idx].copyWith(name: name, updatedAt: DateTime.now());
+    }
+  }
+
+  @override
+  Future<void> deleteNotebook(String id) async {
+    notebooks.removeWhere((n) => n.id == id);
+  }
+
+  @override
+  Future<void> updateViewport(String id, double x, double y, double zoom) async {
+    final idx = notebooks.indexWhere((n) => n.id == id);
+    if (idx != -1) {
+      notebooks[idx] = notebooks[idx].copyWith(
+        viewportX: x,
+        viewportY: y,
+        zoomLevel: zoom,
+        updatedAt: DateTime.now(),
+      );
+    }
+  }
+}
+
 void main() {
   group('CanvasWidget & CanvasGestureHandler Widget Tests', () {
     Widget buildTestWidget({FakeStrokeRepository? fakeRepository}) {
@@ -52,6 +120,7 @@ void main() {
       return ProviderScope(
         overrides: [
           strokeRepositoryProvider.overrideWithValue(repo),
+          notebookRepositoryProvider.overrideWithValue(FakeNotebookRepository()),
         ],
         child: MaterialApp(
           theme: AppTheme.lightTheme,
