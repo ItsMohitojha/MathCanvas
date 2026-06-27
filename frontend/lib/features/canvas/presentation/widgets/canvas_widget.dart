@@ -14,6 +14,8 @@ import 'package:mathcanvas/features/canvas/presentation/widgets/canvas_gesture_h
 import 'package:mathcanvas/features/canvas/presentation/widgets/stroke_painter.dart';
 import 'package:mathcanvas/features/recognition/presentation/providers/recognition_state_provider.dart';
 import 'package:mathcanvas/features/recognition/presentation/widgets/recognition_overlay_painter.dart';
+import 'package:mathcanvas/features/math_engine/presentation/widgets/math_result_overlay.dart';
+import 'package:mathcanvas/features/graph/presentation/widgets/graph_overlay.dart';
 
 /// The main infinite canvas widget.
 ///
@@ -80,6 +82,16 @@ class CanvasWidget extends ConsumerWidget {
                 },
               ),
             ),
+          ),
+          // Math Evaluation/Result Layer
+          const Positioned.fill(
+            child: IgnorePointer(
+              child: MathResultOverlay(),
+            ),
+          ),
+          // Graph Engine Layer: Interactive graph cards for function expressions
+          const Positioned.fill(
+            child: GraphOverlay(),
           ),
         ],
       ),

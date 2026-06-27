@@ -68,8 +68,8 @@ def test_parse_function():
     assert data["result"]["type"] == "function"
 
 def test_parse_internal_error(mocker):
-    # Mock parse_to_sympy_str to raise a generic Exception
-    mocker.patch("api.routes.parse.parse_to_sympy_str", side_effect=Exception("Unexpected DB error"))
+    # Mock analyze_expression to raise a generic Exception
+    mocker.patch("api.routes.parse.analyze_expression", side_effect=Exception("Unexpected DB error"))
     response = client.post("/api/v1/parse", json={"expression": "2x + 4"})
     assert response.status_code == 500
     data = response.json()

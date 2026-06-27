@@ -1,4 +1,5 @@
 import logging
+import math as _math
 from typing import Any, Dict, List, Tuple, Optional
 import sympy as sp
 from sympy.abc import _clash
@@ -47,8 +48,8 @@ def evaluate_function(
         for x in x_values:
             try:
                 y = float(f(x))
-                # Handle infinity or complex numbers
-                if abs(y) > 1e10 or sp.isnan(y):
+                # Handle infinity, NaN, or extremely large values
+                if _math.isnan(y) or _math.isinf(y) or abs(y) > 1e10:
                     y_values.append(None)
                 else:
                     y_values.append(y)

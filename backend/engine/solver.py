@@ -32,11 +32,20 @@ class MathResult:
 class MathSolver:
     def __init__(self, timeout_seconds: int = 10) -> None:
         self.timeout_seconds = timeout_seconds
+        self._cache = {}
 
-    def evaluate_arithmetic(self, expression_str: str) -> MathResult:
+    def evaluate_arithmetic(self, expression_str: str, symbol_table: Optional[Dict[str, str]] = None) -> MathResult:
         """Evaluates an arithmetic expression and returns a numeric result."""
+        cache_key = ("evaluate", expression_str, tuple(sorted(symbol_table.items())) if symbol_table else None)
+        if cache_key in self._cache:
+            logger.info(f"Cache hit for evaluate_arithmetic: '{expression_str}'")
+            return self._cache[cache_key]
+
         try:
             expr = sympify(expression_str)
+            if symbol_table:
+                subs_dict = {Symbol(k): sympify(v) for k, v in symbol_table.items()}
+                expr = expr.subs(subs_dict)
             # Evaluate to float
             val = expr.evalf()
             numeric_val = float(val)
@@ -44,21 +53,31 @@ class MathSolver:
             if numeric_val.is_integer():
                 numeric_val = int(numeric_val)
             
-            return MathResult(
+            res = MathResult(
                 result_type="numeric",
                 value=str(numeric_val),
                 latex_str=latex(expr),
                 numeric=float(numeric_val),
             )
+            self._cache[cache_key] = res
+            return res
         except Exception as e:
             logger.error(f"Arithmetic evaluation failed for '{expression_str}': {e}")
             raise SolveError(f"Cannot evaluate arithmetic: {e}", {"expression": expression_str})
 
-    def solve_equation(self, expression_str: str, vars_to_solve: List[str]) -> MathResult:
+    def solve_equation(self, expression_str: str, vars_to_solve: List[str], symbol_table: Optional[Dict[str, str]] = None) -> MathResult:
         """Solves an algebraic equation for specified variables."""
+        cache_key = ("solve", expression_str, tuple(sorted(vars_to_solve)), tuple(sorted(symbol_table.items())) if symbol_table else None)
+        if cache_key in self._cache:
+            logger.info(f"Cache hit for solve_equation: '{expression_str}' (vars: {vars_to_solve})")
+            return self._cache[cache_key]
+
         try:
             # Parse equation (e.g. Eq(2*x + 4, 8))
             expr = parse_expression(expression_str)
+            if symbol_table:
+                subs_dict = {Symbol(k): sympify(v) for k, v in symbol_table.items() if k not in vars_to_solve}
+                expr = expr.subs(subs_dict)
             
             # Identify variables (Symbols)
             symbols_list = [Symbol(v) for v in vars_to_solve]
@@ -118,28 +137,40 @@ class MathSolver:
             except Exception:
                 pass
 
-            return MathResult(
+            res = MathResult(
                 result_type="solution",
                 value=combined_value,
                 latex_str=combined_latex,
                 numeric=numeric_val,
                 solutions=solutions_list,
             )
+            self._cache[cache_key] = res
+            return res
         except Exception as e:
             logger.error(f"Equation solving failed for '{expression_str}': {e}")
             raise SolveError(f"Cannot solve equation: {e}", {"expression": expression_str})
 
-    def simplify_expression(self, expression_str: str) -> MathResult:
+    def simplify_expression(self, expression_str: str, symbol_table: Optional[Dict[str, str]] = None) -> MathResult:
         """Simplifies a symbolic expression."""
+        cache_key = ("simplify", expression_str, tuple(sorted(symbol_table.items())) if symbol_table else None)
+        if cache_key in self._cache:
+            logger.info(f"Cache hit for simplify_expression: '{expression_str}'")
+            return self._cache[cache_key]
+
         try:
             expr = parse_expression(expression_str)
+            if symbol_table:
+                subs_dict = {Symbol(k): sympify(v) for k, v in symbol_table.items()}
+                expr = expr.subs(subs_dict)
             simplified_expr = simplify(expr)
             
-            return MathResult(
+            res = MathResult(
                 result_type="simplified",
                 value=str(simplified_expr),
                 latex_str=latex(simplified_expr),
             )
+            self._cache[cache_key] = res
+            return res
         except Exception as e:
             logger.error(f"Simplification failed for '{expression_str}': {e}")
             raise SolveError(f"Cannot simplify expression: {e}", {"expression": expression_str})

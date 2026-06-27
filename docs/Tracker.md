@@ -17,8 +17,8 @@
 | **Status** | 🟡 In Progress |
 | **Start Date** | 2026-06-12 |
 | **Target Release** | 2026-10-02 |
-| **Current Phase** | Phase 5 — Math Engine |
-| **Overall Progress** | 50% |
+| **Current Phase** | Phase 8 — Testing |
+| **Overall Progress** | 80% |
 | **Health** | 🟢 Green |
 
 ### Phase Progress
@@ -30,9 +30,9 @@
 | 2 | Stroke Capture System | 🟢 Complete | 100% | None |
 | 3 | Recognition Layer | 🟢 Complete | 100% | None |
 | 4 | Expression Parser | 🟢 Complete | 100% | None |
-| 5 | Math Engine | 🔵 Not Started | 0% | Phase 4 |
-| 6 | Graph Engine | 🔵 Not Started | 0% | Phase 4, 5 |
-| 7 | Persistence Layer | 🔵 Not Started | 0% | Phase 2, 3, 5, 6 |
+| 5 | Math Engine | 🟢 Complete | 100% | None |
+| 6 | Graph Engine | 🟢 Complete | 100% | None |
+| 7 | Persistence Layer | 🟢 Complete | 100% | None |
 | 8 | Testing | 🔵 Not Started | 0% | All |
 | 9 | Release | 🔵 Not Started | 0% | Phase 8 |
 
@@ -49,21 +49,34 @@
 
 | Attribute | Value |
 |-----------|-------|
-| **Sprint** | Sprint 2 (Stroke Capture) |
-| **Sprint Goal** | Capture, smooth, and persist strokes with stylus support and culling |
-| **Start Date** | 2026-06-18 |
-| **End Date** | 2026-07-01 |
+| **Sprint** | Sprint 5 (Graph Engine) |
+| **Sprint Goal** | Generate, render, and interact with function graphs on the canvas |
+| **Start Date** | 2026-06-26 |
+| **End Date** | 2026-06-27 |
 | **Status** | 🟢 Complete |
 
 ### Sprint Backlog
 
 | Task ID | Task | Assignee | Status | Notes |
 |---------|------|----------|--------|-------|
-| S2-01 | Create Stroke and StrokePoint freezed models | Agent-Frontend | 🟢 Complete | Freezed & serialized models generated |
-| S2-02 | Implement StrokePainter with Catmull-Rom spline | Agent-Frontend | 🟢 Complete | Smooth drawing & culling added |
-| S2-03 | Implement gesture capture and palm rejection | Agent-Frontend | 🟢 Complete | Filters touches near stylus |
-| S2-04 | Implement SQLite persistence for strokes | Agent-Frontend | 🟢 Complete | Auto-saves strokes on pointer-up |
-| S2-05 | Write tests and verify performance | Agent-Frontend | 🟢 Complete | 100% test pass; 60fps drawing verified |
+| P6-01 | Implement Plotly graph generator | Agent-Backend | 🟢 Complete | engine/grapher.py — data + HTML generation |
+| P6-02 | Implement POST /api/v1/graph route | Agent-Backend | 🟢 Complete | api/routes/graph.py |
+| P6-03 | Support data and HTML output formats | Agent-Backend | 🟢 Complete | Data (JSON) and HTML (Plotly) endpoints |
+| P6-04 | Implement graph styling (colors, grid, axes) | Agent-Backend | 🟢 Complete | GraphStyle Pydantic model |
+| P6-05 | Create Flutter API client for graph endpoint | Agent-Frontend | 🟢 Complete | graph_api_client.dart |
+| P6-06 | Create GraphChartPainter (native rendering) | Agent-Frontend | 🟢 Complete | CustomPainter with axes, grid, curve, glow |
+| P6-07 | Implement graph axes, labels, and grid lines | Agent-Frontend | 🟢 Complete | Auto-scaled tick marks and labels |
+| P6-08 | Implement graph card widget (draggable) | Agent-Frontend | 🟢 Complete | Glassmorphism card with isolated gestures |
+| P6-09 | Implement graph interaction (pan/zoom) | Agent-Frontend | 🟢 Complete | Internal pinch-zoom and pan within card |
+| P6-10 | Implement graph value inspection (tap x,y) | Agent-Frontend | 🟢 Complete | Crosshair + tooltip on tap |
+| P6-11 | Create GraphStateNotifier (Riverpod) | Agent-Frontend | 🟢 Complete | Auto-generates graphs for function expressions |
+| P6-12 | Implement GraphDao and GraphRepository | Agent-Frontend | 🟢 Complete | SQLite CRUD + repository pattern |
+| P6-13 | Implement graph persistence | Agent-Frontend | 🟢 Complete | Cached graph data in SQLite |
+| P6-14 | Implement graph update on expression change | Agent-Frontend | 🟢 Complete | Watches recognition state for deltas |
+| P6-16 | Write unit tests for graph generator | Agent-Backend | 🟢 Complete | 18/18 tests passed |
+| P6-17 | Write API integration tests | Agent-Backend | 🟢 Complete | 9/9 tests passed |
+| P6-18 | Write widget tests for graph card | Agent-Frontend | 🟢 Complete | 6/6 tests passed |
+| P6-19 | Performance test: graph gen under 3s | Agent-Backend | 🟢 Complete | 500 points in <1s |
 
 ---
 
@@ -153,6 +166,44 @@ When adding tasks, use this format:
 | P4-09 | Write unit tests for expression parser | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 | P4-10 | Write unit tests for type classifier | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
 | P4-11 | Write integration tests for parse API | 4 | Agent-Backend | 2026-06-18 | — | Completed by Jules |
+| P5-01 | Implement SymPy solver wrapper | 5 | Agent-Backend | 2026-06-26 | — | Completed in engine/solver.py |
+| P5-02 | Implement arithmetic evaluation endpoint | 5 | Agent-Backend | 2026-06-26 | — | Completed in api/routes/solve.py |
+| P5-03 | Implement algebraic solving endpoint | 5 | Agent-Backend | 2026-06-26 | — | Completed in api/routes/solve.py |
+| P5-04 | Implement symbolic simplification endpoint | 5 | Agent-Backend | 2026-06-26 | — | Completed in api/routes/solve.py |
+| P5-05 | Implement computation timeout (10s max) | 5 | Agent-Backend | 2026-06-26 | — | Completed via engine/solver.py timeout |
+| P5-06 | Implement LaTeX output for results | 5 | Agent-Backend | 2026-06-26 | — | Result format includes LaTeX rendering |
+| P5-07 | Implement result caching | 5 | Agent-Backend | 2026-06-26 | — | LRU memory caching on backend |
+| P5-08 | Create Pydantic models for solve/evaluate/simplify | 5 | Agent-Backend | 2026-06-26 | — | Models defined in backend/api/models |
+| P5-09 | Create Flutter API client for math endpoints | 5 | Agent-Frontend | 2026-06-26 | — | Created math_api_client.dart |
+| P5-10 | Create MathStateNotifier | 5 | Agent-Frontend | 2026-06-26 | — | Created math_state_provider.dart |
+| P5-11 | Implement symbol table in state | 5 | Agent-Frontend | 2026-06-26 | — | symbolTable Map managed in MathState |
+| P5-12 | Implement dependency tracking | 5 | Agent-Frontend | 2026-06-26 | — | Parses and maps dependencies dynamically |
+| P5-13 | Implement dependency propagation | 5 | Agent-Frontend | 2026-06-26 | — | Re-evaluates downstream variables recursively |
+| P5-14 | Implement ResultDao and ResultRepository | 5 | Agent-Frontend | 2026-06-26 | — | Local database CRUD for results |
+| P5-15 | Implement VariableDao and VariableRepository | 5 | Agent-Frontend | 2026-06-26 | — | Local database CRUD for variables |
+| P5-16 | Create result display overlay on canvas | 5 | Agent-Frontend | 2026-06-26 | — | CustomPaint overlay over drawing stack |
+| P5-17 | Write unit tests for solver wrapper | 5 | Agent-Backend | 2026-06-26 | — | Passed unit tests |
+| P5-18 | Write API integration tests | 5 | Agent-Backend | 2026-06-26 | — | Passed integration tests |
+| P5-19 | Write unit tests for symbol table and dependency tracking | 5 | Agent-Frontend | 2026-06-26 | — | Passed unit tests |
+| P5-20 | Write integration tests for end-to-end solve flow | 5 | Agent-Frontend | 2026-06-26 | — | Passed unit and widget tests |
+| P6-01 | Implement Plotly graph generator (engine/grapher.py) | 6 | Agent-Backend | 2026-06-26 | — | Data + HTML generation with lambdify |
+| P6-02 | Implement POST /api/v1/graph route | 6 | Agent-Backend | 2026-06-26 | — | Data and HTML output formats |
+| P6-03 | Support data and HTML output formats | 6 | Agent-Backend | 2026-06-26 | — | Response envelope with graph data |
+| P6-04 | Implement graph styling (colors, grid, axes) | 6 | Agent-Backend | 2026-06-26 | — | GraphStyle Pydantic model |
+| P6-05 | Create Flutter API client for graph endpoint | 6 | Agent-Frontend | 2026-06-27 | — | Dio-based HTTP client |
+| P6-06 | Create GraphChartPainter (native rendering) | 6 | Agent-Frontend | 2026-06-27 | — | CustomPainter with axes, grid, glow curve |
+| P6-07 | Implement graph axes, labels, and grid lines | 6 | Agent-Frontend | 2026-06-27 | — | Auto-scaled tick algorithm |
+| P6-08 | Implement graph card widget (draggable on canvas) | 6 | Agent-Frontend | 2026-06-27 | — | Glassmorphism card, isolated gestures |
+| P6-09 | Implement graph interaction (pan/zoom within graph) | 6 | Agent-Frontend | 2026-06-27 | — | Internal pinch-zoom and pan |
+| P6-10 | Implement graph value inspection (tap x,y) | 6 | Agent-Frontend | 2026-06-27 | — | Crosshair + tooltip overlay |
+| P6-11 | Create GraphStateNotifier (Riverpod) | 6 | Agent-Frontend | 2026-06-27 | — | Auto-generates for function expressions |
+| P6-12 | Implement GraphDao and GraphRepository | 6 | Agent-Frontend | 2026-06-27 | — | SQLite CRUD + domain mapping |
+| P6-13 | Implement graph persistence | 6 | Agent-Frontend | 2026-06-27 | — | graph_data_json stored in graphs table |
+| P6-14 | Implement graph update on expression change | 6 | Agent-Frontend | 2026-06-27 | — | Delta processing in state notifier |
+| P6-16 | Write unit tests for graph generator | 6 | Agent-Backend | 2026-06-27 | — | 18/18 passed, fixed sp.isnan bug |
+| P6-17 | Write API integration tests | 6 | Agent-Backend | 2026-06-27 | — | 9/9 passed |
+| P6-18 | Write widget tests for graph card | 6 | Agent-Frontend | 2026-06-27 | — | 6/6 passed |
+| P6-19 | Performance test: graph gen under 3 seconds | 6 | Agent-Backend | 2026-06-27 | — | 500 pts in <1s verified |
 
 ---
 
@@ -372,6 +423,9 @@ When adding tasks, use this format:
 | 2026-06-18T20:15:00 | Agent-Frontend | Implemented Phase 2 Stroke Capture System | stroke_point.dart, stroke.dart, stroke_entity.dart, stroke_local_datasource.dart, stroke_repository_impl.dart, stroke_painter.dart, canvas_state.dart, canvas_state_provider.dart, canvas_gesture_handler.dart, canvas_widget.dart, canvas_screen.dart | P2 | 11 files created/modified — pressure-sensitive drawing, palm rejection, Catmull-Rom smoothing, SQLite database persistence, and culling |
 | 2026-06-18T22:50:00 | Agent-Backend | Implemented Phase 4 Expression Parser | parse.py, parser.py, test_parser.py, test_api_parse.py, requirements.txt | P4 | 5 files created/modified — Safe LaTeX-to-SymPy parser, type classifier, FastAPI route, comprehensive unit/API tests, and dependency configuration |
 | 2026-06-26T20:55:00 | Agent-Frontend | Implemented Phase 3 Recognition Layer | recognition_result.dart, recognized_expression.dart, recognition_engine.dart, expression_repository.dart, expression_entity.dart, expression_local_datasource.dart, expression_repository_impl.dart, tflite_recognition_engine.dart, recognition_state_provider.dart, recognition_overlay_painter.dart, canvas_widget.dart | P3 | 11 files created/modified — handwriting recognition pipeline, stroke grouping, geometric heuristics, superscript layout compiler, and custom painter overlay. |
+| 2026-06-26T21:00:00 | Agent-Frontend & Agent-Backend | Implemented Phase 5 Math Engine | solver.py, solve.py, test_solver.py, test_api_solve.py, math_result.dart, variable.dart, result_entity.dart, variable_entity.dart, math_local_datasource.dart, math_api_client.dart, math_repository.dart, math_repository_impl.dart, math_state.dart, math_state_provider.dart, math_result_overlay.dart, canvas_widget.dart | P5 | 16 files created/modified — backend solver/evaluation/simplification, caching, frontend DTOs/models, local datasource, Riverpod math state with cycle detection & dependent variable propagation, canvas result overlay widget. |
+| 2026-06-27T17:00:00 | Agent-Frontend & Agent-Backend | Implemented Phase 6 Graph Engine | grapher.py, test_grapher.py, test_api_graph.py, graph_data.dart, graph_entity.dart, graph_api_client.dart, graph_local_datasource.dart, graph_repository.dart, graph_repository_impl.dart, graph_state.dart, graph_state_provider.dart, graph_chart_painter.dart, graph_card_widget.dart, graph_overlay.dart, canvas_widget.dart | P6 | 15 files created/modified — native 2D chart CustomPainter, interactive graph cards with pan/zoom/tap-to-inspect, Riverpod state auto-generating graphs for function expressions, SQLite persistence, backend grapher bug fix (sp.isnan → math.isnan). 52 tests total (27 backend + 25 frontend). |
+| 2026-06-27T17:30:00 | Agent-Frontend | Implemented Phase 7 Persistence Layer | pubspec.yaml, main.dart, app.dart, notebook.dart, notebook_repository.dart, notebook_entity.dart, notebook_local_datasource.dart, notebook_repository_impl.dart, notebook_state.dart, notebook_state_provider.dart, auto_save_provider.dart, theme_provider.dart, home_screen.dart, notebook_card.dart, settings_bottom_sheet.dart, save_indicator.dart, canvas_toolbar.dart, canvas_screen.dart, tests | P7 | 18 files created/modified + 4 test files — complete notebook CRUD flow, 30s auto-save timer + lifecycle observer save, viewport position and zoom persistence, save indicator, SharedPreferences theme settings persistence, responsive premium grid dashboard. 17 new frontend unit/widget tests. |
 
 ---
 
@@ -415,6 +469,25 @@ Each entry follows [Keep a Changelog](https://keepachangelog.com/) format:
 - Rules.md — Agent rules and coding standards
 - UI_UX.md — Design system
 - Structure.md — Repository structure
+- Phase 6 Graph Engine (18 tasks)
+  - Backend: graph data generator, graph API route, unit + integration tests
+  - Frontend: GraphData model, GraphEntity, GraphApiClient, GraphLocalDatasource, GraphRepository
+  - Frontend: GraphStateNotifier with auto-generation for function expressions
+  - Frontend: GraphChartPainter (native 2D chart), GraphCardWidget (interactive), GraphOverlay
+  - Canvas integration: graph overlay layer added to canvas_widget.dart
+- Phase 7 Persistence Layer (20 tasks)
+  - Dependencies: Added shared_preferences package
+  - Domain/Data: Notebook, NotebookEntity, NotebookLocalDatasource, NotebookRepository
+  - State: NotebookState, NotebookStateNotifier (Riverpod)
+  - Viewport: Coords (viewport_x, viewport_y) & zoom_level saved to SQLite
+  - Auto-save: 30-second interval timer + WidgetsBindingObserver app lifecycle save
+  - Settings: ThemeNotifier (System/Light/Dark) persisted using SharedPreferences
+  - Widgets: SaveIndicator (saving/saved animations), SettingsBottomSheet (theme toggle)
+  - Dashboard: Glassmorphism HomeScreen showing responsive grid of notebook cards, long-press actions (rename, delete dialogs), search filtering, empty states
+  - Screen integration: CanvasScreen restores viewport state and displays notebook title
+
+### Fixed
+- `grapher.py`: Replaced `sp.isnan()` with `math.isnan()`/`math.isinf()` for proper float handling
 
 ---
 

@@ -215,3 +215,60 @@ def classify_expression(latex_str: str) -> str:
         return "function" if "x" in cleaned else "expression"
 
     return "expression"
+
+
+def analyze_expression(latex_str: str) -> dict:
+    """Analyzes a LaTeX expression to extract variables, defined variable, and dependencies."""
+    cleaned = clean_latex(latex_str)
+    sympy_str = parse_to_sympy_str(latex_str)
+    expr_type = classify_expression(latex_str)
+    
+    # Parse to SymPy expression to extract symbols
+    expr = parse_expression(latex_str)
+    
+    # Extract variables (free symbols as strings)
+    variables = sorted(list(set(str(s) for s in expr.free_symbols)))
+    
+    defined_variable = None
+    dependencies = list(variables)
+    
+    if expr_type == "assignment" and "=" in cleaned:
+        parts = cleaned.split("=")
+        if len(parts) == 2:
+            lhs = parts[0].strip()
+            if re.match(r"^[a-zA-Z][a-zA-Z0-9_]*$", lhs):
+                defined_variable = lhs
+                try:
+                    rhs_expr = parse_expression(parts[1].strip())
+                    dependencies = sorted(list(set(str(s) for s in rhs_expr.free_symbols)))
+                except Exception:
+                    dependencies = []
+    elif expr_type == "function" and "=" in cleaned:
+        parts = cleaned.split("=")
+        if len(parts) == 2:
+            lhs = parts[0].strip()
+            if re.match(r"^([a-zA-Z][a-zA-Z0-9_]*)\(([a-zA-Z0-9_,\s]+)\)$", lhs):
+                match = re.match(r"^([a-zA-Z][a-zA-Z0-9_]*)\(([a-zA-Z0-9_,\s]+)\)$", lhs)
+                defined_variable = match.group(1)
+                params = {p.strip() for p in match.group(2).split(",")}
+                try:
+                    rhs_expr = parse_expression(parts[1].strip())
+                    dependencies = sorted(list(set(str(s) for s in rhs_expr.free_symbols if str(s) not in params)))
+                except Exception:
+                    dependencies = []
+            elif re.match(r"^[a-zA-Z][a-zA-Z0-9_]*$", lhs):
+                defined_variable = lhs
+                try:
+                    rhs_expr = parse_expression(parts[1].strip())
+                    dependencies = sorted(list(set(str(s) for s in rhs_expr.free_symbols)))
+                except Exception:
+                    dependencies = []
+                    
+    return {
+        "sympy_str": sympy_str,
+        "type": expr_type,
+        "variables": variables,
+        "defined_variable": defined_variable,
+        "dependencies": dependencies
+    }
+

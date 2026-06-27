@@ -44,6 +44,9 @@ MathCanvas/                          # Repository root
 ├── frontend/                        # Flutter application (Dart)
 ├── backend/                         # FastAPI application (Python)
 ├── docs/                            # Project documentation
+├── .agent/                          # Agent-specific skills & rules
+│   └── skills/                      # Custom local agent skills
+│       └── find-docs/               # Documentation lookup skill
 ├── .github/                         # GitHub configuration
 │   └── workflows/                   # CI/CD workflows
 ├── .gitignore                       # Git ignore rules

@@ -12,8 +12,10 @@ import 'package:mathcanvas/app/theme/app_shadows.dart';
 import 'package:mathcanvas/app/theme/app_spacing.dart';
 import 'package:mathcanvas/app/theme/app_theme.dart';
 import 'package:mathcanvas/features/canvas/presentation/providers/canvas_state_provider.dart';
+import 'package:mathcanvas/features/notebook/presentation/widgets/save_indicator.dart';
+import 'package:mathcanvas/features/settings/presentation/widgets/settings_bottom_sheet.dart';
 
-/// Floating toolbar that displays zoom level and reset action.
+/// Floating toolbar that displays zoom level, reset, save indicator, and settings.
 ///
 /// Positioned at the bottom-center of the canvas with a
 /// semi-transparent glassmorphism surface. Becomes fully opaque
@@ -49,6 +51,17 @@ class CanvasToolbar extends ConsumerWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Save indicator.
+              const SaveIndicator(),
+              const SizedBox(width: AppSpacing.space12),
+              // Divider.
+              Container(
+                width: 1,
+                height: 24,
+                color: colors.divider,
+              ),
+              const SizedBox(width: AppSpacing.space12),
+
               // Zoom level indicator.
               Text(
                 '$zoomPercent%',
@@ -63,6 +76,7 @@ class CanvasToolbar extends ConsumerWidget {
                 color: colors.divider,
               ),
               const SizedBox(width: AppSpacing.space8),
+
               // Reset view button.
               Semantics(
                 label: 'Reset canvas view',
@@ -83,6 +97,33 @@ class CanvasToolbar extends ConsumerWidget {
                         .resetView();
                   },
                   tooltip: 'Reset view',
+                ),
+              ),
+              const SizedBox(width: AppSpacing.space4),
+              // Divider.
+              Container(
+                width: 1,
+                height: 24,
+                color: colors.divider,
+              ),
+              const SizedBox(width: AppSpacing.space8),
+
+              // Settings button.
+              Semantics(
+                label: 'Open settings',
+                child: IconButton(
+                  icon: Icon(
+                    Icons.settings_outlined,
+                    color: colors.onSurfaceVariant,
+                    size: 20,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(
+                    minWidth: 44,
+                    minHeight: 44,
+                  ),
+                  onPressed: () => SettingsBottomSheet.show(context),
+                  tooltip: 'Settings',
                 ),
               ),
             ],

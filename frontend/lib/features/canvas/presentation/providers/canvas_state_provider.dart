@@ -11,6 +11,8 @@ import 'package:mathcanvas/features/canvas/domain/models/stroke_point.dart';
 import 'package:mathcanvas/features/canvas/domain/repositories/stroke_repository.dart';
 import 'package:mathcanvas/shared/database/database_provider.dart';
 
+import 'package:mathcanvas/features/notebook/presentation/providers/notebook_state_provider.dart';
+
 /// Provider for the stroke local data source.
 final strokeLocalDatasourceProvider = Provider<StrokeLocalDatasource>((ref) {
   final dbFuture = ref.watch(databaseProvider);
@@ -41,15 +43,23 @@ class CanvasStateNotifier extends Notifier<CanvasState> {
   @override
   CanvasState build() => const CanvasState();
 
-  /// Loads strokes from SQLite database for the given [notebookId].
+  /// Loads strokes and viewport from SQLite database for the given [notebookId].
   Future<void> loadNotebook(String notebookId) async {
     final repository = ref.read(strokeRepositoryProvider);
     final strokes = await repository.getStrokes(notebookId);
+    
+    final notebookRepo = ref.read(notebookRepositoryProvider);
+    final notebook = await notebookRepo.getNotebookById(notebookId);
+
     state = state.copyWith(
       currentNotebookId: notebookId,
       strokes: strokes,
       currentStroke: null,
       showHint: strokes.isEmpty,
+      viewportOffset: notebook != null
+          ? Offset(notebook.viewportX, notebook.viewportY)
+          : Offset.zero,
+      zoomLevel: notebook != null ? notebook.zoomLevel : 1.0,
     );
   }
 

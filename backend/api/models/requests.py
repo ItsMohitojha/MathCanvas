@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Dict
 from pydantic import BaseModel, Field
 
 class ParseRequest(BaseModel):
@@ -8,12 +8,15 @@ class SolveRequest(BaseModel):
     expression: str = Field(..., description="SymPy-compatible string to solve")
     variables: List[str] = Field(default_factory=lambda: ["x"], description="List of variables to solve for")
     operation: str = Field(default="solve", description="Operation to perform: solve, expand, factor")
+    symbol_table: Optional[Dict[str, str]] = Field(default=None, description="Optional symbol table for variable substitution")
 
 class EvaluateRequest(BaseModel):
     expression: str = Field(..., description="Arithmetic expression to evaluate")
+    symbol_table: Optional[Dict[str, str]] = Field(default=None, description="Optional symbol table for variable substitution")
 
 class SimplifyRequest(BaseModel):
     expression: str = Field(..., description="Symbolic expression to simplify")
+    symbol_table: Optional[Dict[str, str]] = Field(default=None, description="Optional symbol table for variable substitution")
 
 class GraphStyle(BaseModel):
     title: Optional[str] = None

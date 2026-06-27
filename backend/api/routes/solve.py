@@ -13,7 +13,7 @@ def solve_route(request: SolveRequest) -> ResponseEnvelope:
     """Solves an algebraic equation for the given variables."""
     start_time = time.perf_counter()
     try:
-        res = solver.run_with_timeout(solver.solve_equation, request.expression, request.variables)
+        res = solver.run_with_timeout(solver.solve_equation, request.expression, request.variables, request.symbol_table)
         duration_ms = int((time.perf_counter() - start_time) * 1000)
         
         return ResponseEnvelope(
@@ -47,7 +47,7 @@ def evaluate_route(request: EvaluateRequest) -> ResponseEnvelope:
     """Evaluates an arithmetic expression and returns a numeric result."""
     start_time = time.perf_counter()
     try:
-        res = solver.run_with_timeout(solver.evaluate_arithmetic, request.expression)
+        res = solver.run_with_timeout(solver.evaluate_arithmetic, request.expression, request.symbol_table)
         duration_ms = int((time.perf_counter() - start_time) * 1000)
         
         return ResponseEnvelope(
@@ -80,7 +80,7 @@ def simplify_route(request: SimplifyRequest) -> ResponseEnvelope:
     """Simplifies a symbolic expression."""
     start_time = time.perf_counter()
     try:
-        res = solver.run_with_timeout(solver.simplify_expression, request.expression)
+        res = solver.run_with_timeout(solver.simplify_expression, request.expression, request.symbol_table)
         duration_ms = int((time.perf_counter() - start_time) * 1000)
         
         return ResponseEnvelope(

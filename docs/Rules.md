@@ -608,9 +608,34 @@ When updating documentation:
 - [ ] Dates are updated
 ```
 
+## 18. Agent Tooling, MCPs, and Skills
+
+To maximize productivity and maintain project standards, agents must leverage the configured Model Context Protocol (MCP) servers and localized skills.
+
+### 18.1 Model Context Protocol (MCP) Servers
+
+| Server Name | Command/Url | Intended Usage |
+|-------------|-------------|----------------|
+| `sqlite` | `@modelcontextprotocol/server-sqlite` | **Mandatory** for inspecting, querying, and verifying local SQLite database records (`d:/MathCanvas/mathcanvas.db`) during development and debugging. |
+| `stitch` | `https://stitch.googleapis.com/mcp` | Used for UI/UX wireframing, creating design systems, modifying screens, and reviewing canvas design specs. |
+| `jules` | `jules-mcp` | Used to manage and coordinate session planning, review plans, and approve architectural proposals. |
+| `github-mcp` | `github-mcp-server` | Used for repository operations, including branching, committing, creating issues/PRs, and code searches. |
+
+### 18.2 Agent Skills
+
+Agents must use the following workspace-localized skills to maintain compliance:
+
+1. **`find-docs` (`.agent/skills/find-docs/`):**
+   * **Mandatory** for looking up API syntax, package configurations, or library documentation (e.g., FastAPI, sqflite, Riverpod, Black, Ruff, or Pytest).
+   * Do not rely on LLM training data for libraries; verify syntax and version compatibility using the `ctx7` CLI tool.
+2. **`managing-python-dependencies`:**
+   * Used to ensure all Python dependencies are managed within the local virtual environment (`backend/.venv`) using black/ruff without performing global installs.
+3. **`notebook-guidance`:**
+   * Used when building, editing, or validating IPython/Jupyter notebooks for math/engine analysis or data visualisations.
+
 ---
 
-## 18. Mandatory Rules Summary
+## 19. Mandatory Rules Summary
 
 These are the non-negotiable rules that override all other guidelines:
 
